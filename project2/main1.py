@@ -1,23 +1,29 @@
 from kivymd.app import MDApp
-from kivymd.uix.screen import Screen
-from kivymd.uix.list import MDList, ThreeLineListItem, ThreeLineIconListItem, ThreeLineAvatarListItem
-from kivymd.uix.list import IconLeftWidget, ImageLeftWidget
-from kivy.uix.scrollview import ScrollView
+from kivy.lang.builder import Builder
+from kivy.uix.screenmanager import Screen, ScreenManager
+from screen_nav import screen_helper
+from kivy.core.window import Window
+
+Window.size = (300, 500)
+
+
+class MenuScreen(Screen):
+    pass
+
+class ProfileScreen(Screen):
+    pass
+
+class UploadScreen(Screen):
+    pass
+
+sm = ScreenManager()
+sm.add_widget(MenuScreen(name='menu'))
+sm.add_widget(ProfileScreen(name='profile'))
+sm.add_widget(UploadScreen(name='upload'))
 
 class DemoApp(MDApp):
     def build(self):
-        screen = Screen()
-        scroll_view = ScrollView()
-        list_view = MDList()
-        scroll_view.add_widget(list_view)
-        for i in range(20):
-            #icon = IconLeftWidget(icon="android")
-            image = IconLeftWidget(source='')
-            items = ThreeLineIconListItem(text='Item ' + str(i), secondary_text='Hello World', tertiary_text='my text')
-            items.add_widget(icon)
-            list_view.add_widget(items)
-
-        screen.add_widget(scroll_view)
+        screen = Builder.load_string(screen_helper)
         return screen
     
 DemoApp().run()
